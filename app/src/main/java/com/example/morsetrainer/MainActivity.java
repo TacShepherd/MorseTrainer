@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,12 +23,18 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageView telegraphKey;
     private long lastDown, lastDuration;
-    private TextView tapOutput, tapMessage;
+    private TextView tapOutput, tapMessage, listenText;
+    private EditText listenEditText;
     private String tapOutputString;
     private int questionId;
     private Handler handler = new Handler();
     private Runnable checkAnswerRunnable;
-    private String[] tapQuestion = {"a._", "b_..", "c_._.", "d_..", "e.", "f.._.", "g__.", "h....", "i..", "j.___", "k_._", "l._..", "m__", "n_.", "o___", "p.__.", "q__._", "r._.", "s...", "t_", "u.._", "v..._", "w.__", "x_.._", "y_.__", "z__..", "1.____", "2..___", "3...__", "4...._", "5.....", "6_....", "7__...", "8___..", "9____.", "0_____"};
+    private String[] tapQuestion = {"a._", "b_..", "c_._.", "d_..", "e.",
+            "f.._.", "g__.", "h....", "i..", "j.___", "k_._", "l._..",
+            "m__", "n_.", "o___", "p.__.", "q__._", "r._.", "s...", "t_",
+            "u.._", "v..._", "w.__", "x_.._", "y_.__", "z__..", "1.____",
+            "2..___", "3...__", "4...._", "5.....", "6_....", "7__...",
+            "8___..", "9____.", "0_____"};
     MediaPlayer.OnCompletionListener completionListener;
 
     @Override
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void listenButtonOnClick(View v){
         setContentView(R.layout.listen);
+        listenText = findViewById(R.id.listenText);
 
         completionListener = new MediaPlayer.OnCompletionListener() {
             @Override
@@ -95,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                             tapOutputString = "";
                         }
                     };
-                    handler.postDelayed(checkAnswerRunnable, 2000); // 2 seconds of inactivity
+                    //2 seconds of inactivity before answer is checked
+                    handler.postDelayed(checkAnswerRunnable, 2000);
                 }
                 return true;
             }
@@ -123,8 +132,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playButtonOnClick(View v){
-        mediaPlayer = MediaPlayer.create(this, R.raw.listen1);
+        mediaPlayer = MediaPlayer.create(this, R.raw.a);
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(completionListener);
+    }
+
+    public void checkButtonOnClick(View v){
+        if(listenEditText.getText().equals("a")){
+            listenText.setText("Correct!");
+        } else{
+            listenText.setText("Incorrect :(");
+        }
     }
 }
