@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         listenEditText.setText("");
         listenText.setText("");
 
+        //instantly plays next audio
         mediaPlayer = MediaPlayer.create(this, resId);
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(completionListener);
