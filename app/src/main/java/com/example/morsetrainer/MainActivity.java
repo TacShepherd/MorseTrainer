@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private long lastDown, lastDuration;
     private TextView tapOutput, tapMessage, listenText;
     private EditText listenEditText;
-    private String tapOutputString;
-    private int questionId;
+    private String tapOutputString, correctCharacter, fileName;
+    private int questionId, listenId, resId;
     private Handler handler = new Handler();
     private Runnable checkAnswerRunnable;
     private String[] tapQuestion = {"a._", "b_..", "c_._.", "d_..", "e.",
@@ -47,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
     public void listenButtonOnClick(View v){
         setContentView(R.layout.listen);
         listenText = findViewById(R.id.listenText);
+        listenEditText = findViewById(R.id.listenEditText);
+
+        listenId = (int)(Math.random() * 36);
+        correctCharacter = tapQuestion[listenId].substring(0, 1);
+
+        if(listenId >= 26) {
+            fileName = "n" + correctCharacter;
+        } else {
+            fileName = correctCharacter;
+        }
+
+        resId = getResources().getIdentifier(fileName, "raw", getPackageName());
 
         completionListener = new MediaPlayer.OnCompletionListener() {
             @Override
@@ -132,16 +144,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playButtonOnClick(View v){
-        mediaPlayer = MediaPlayer.create(this, R.raw.a);
+        mediaPlayer = MediaPlayer.create(this, resId);
         mediaPlayer.start();
         mediaPlayer.setOnCompletionListener(completionListener);
     }
 
     public void checkButtonOnClick(View v){
-        if(listenEditText.getText().equals("a")){
+        if(listenEditText.getText().toString().equals(correctCharacter)){
             listenText.setText("Correct!");
         } else{
             listenText.setText("Incorrect :(");
         }
+    }
+
+    public void nextButtonOnClick(View v){
+        listenId = (int)(Math.random() * 36);
+        correctCharacter = tapQuestion[listenId].substring(0, 1);
+
+        if (listenId >= 26) {
+            fileName = "n" + correctCharacter;
+        } else {
+            fileName = correctCharacter;
+        }
+
+        resId = getResources().getIdentifier(fileName, "raw", getPackageName());
+
+        listenEditText.setText("");
+        listenText.setText("");
+
+        mediaPlayer = MediaPlayer.create(this, resId);
+        mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(completionListener);
     }
 }

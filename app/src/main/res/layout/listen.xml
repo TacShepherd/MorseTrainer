@@ -55,7 +55,7 @@
         android:fontFamily="@font/jetbrains_mono_medium"
         android:inputType="text"
         android:shadowColor="#757575"
-        android:text="Type what you hear..."
+        android:hint="Type what you hear..."
         android:textColor="#757575"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,22 @@
         android:layout_marginEnd="30dp"
         android:backgroundTint="#4caf50"
         android:fontFamily="@font/jetbrains_mono_medium"
+        android:onClick="checkButtonOnClick"
         android:text="Check"
+        android:textColor="#212121"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listenEditText" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#4caf50"
+        android:fontFamily="@font/jetbrains_mono_medium"
+        android:onClick="nextButtonOnClick"
+        android:text="Next"
         android:textColor="#212121"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listenEditText" />
